@@ -1,6 +1,6 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:emergancy_call/ui/home/home_page.dart';
-import 'package:emergancy_call/ui/log_in/log_in.dart';
+import 'package:emergancy_call/ui/login-signup/login_signup.dart';
 import 'package:emergancy_call/ui/on_boarding_page/onboarding_view.dart';
 import 'package:emergancy_call/utils/buttons.dart';
 import 'package:emergancy_call/utils/colors.dart';
@@ -141,6 +141,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   }
 
   _goToLogin() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginSignUpPage(isLogIn: true,)));
   }
 }
