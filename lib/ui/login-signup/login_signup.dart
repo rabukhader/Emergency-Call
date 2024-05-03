@@ -6,6 +6,7 @@ import 'package:emergancy_call/utils/buttons.dart';
 import 'package:emergancy_call/utils/colors.dart';
 import 'package:emergancy_call/utils/icons.dart';
 import 'package:emergancy_call/utils/toaster.dart';
+import 'package:emergancy_call/utils/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,8 +22,10 @@ class LoginSignUpPage extends StatefulWidget {
 
 class _LoginSignUpPageState extends State<LoginSignUpPage> {
   bool isLogIn = false;
-  TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _confirmPassword = TextEditingController();
+  final GlobalKey<FormState> _formState = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -135,31 +138,32 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                                   Expanded(
                                       child: QPrimaryButton(
                                     isLoading: authProvider.isLoggingIn,
+                                    enabled: _validateInput(),
                                     label: isLogIn ? "Login" : "Sign Up",
                                     onPressed: isLogIn
                                         ? () async {
-                                            bool result =
+                                            String result =
                                                 await authProvider.login(
                                                     _email.text,
                                                     _password.text);
-
-                                            if (result) {
+                                            print(result);
+                                            if (result == "pass") {
                                               manageNavigation();
                                             } else {
                                               ErrorUtils.showGeneralError(
-                                                  context,
-                                                  "Invalid Credintials");
+                                                  context, result);
                                             }
                                           }
                                         : () async {
-                                            bool result =
-                                                await authProvider.signUp();
-                                            if (result) {
-                                            manageNavigation();
+                                            String result =
+                                                await authProvider.signUp(
+                                                    _email.text,
+                                                    _password.text);
+                                            if (result == "pass") {
+                                              manageNavigation();
                                             } else {
                                               ErrorUtils.showGeneralError(
-                                                  context,
-                                                  "Invalid Credintials");
+                                                  context, result);
                                             }
                                           },
                                   )),
@@ -203,12 +207,28 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
 
   _loginForm() {
     return Form(
+      key: _formState,
       child: Column(
         children: <Widget>[
           Container(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _formState.currentState!.validate();
+                  _validateInput();
+                });
+              },
               controller: _email,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return null;
+                }
+                if (!Validator.emailFieldValidation(value)) {
+                  return "Please enter a valid email";
+                }
+                return null;
+              },
               decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: "Email",
@@ -218,6 +238,11 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
           Container(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _validateInput();
+                });
+              },
               controller: _password,
               obscureText: true,
               decoration: const InputDecoration(
@@ -232,47 +257,64 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
   }
 
   _signUpForm() {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(8.0),
-          child: const TextField(
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: "Email",
-                hintStyle: TextStyle(color: kPrimaryDarkerColor)),
+    return Form(
+      key: _formState,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _formState.currentState!.validate();
+                  _validateInput();
+                });
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return null;
+                }
+                if (!Validator.emailFieldValidation(value)) {
+                  return "Please enter a valid email";
+                }
+                return null;
+              },
+              controller: _email,
+              decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Email",
+                  hintStyle: TextStyle(color: kPrimaryDarkerColor)),
+            ),
           ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8.0),
-          child: const TextField(
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: "Phone number",
-                hintStyle: TextStyle(color: kPrimaryDarkerColor)),
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _validateInput();
+                });
+              },
+              controller: _password,
+              obscureText: true,
+              decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Password",
+                  hintStyle: TextStyle(color: kPrimaryDarkerColor)),
+            ),
           ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8.0),
-          child: const TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: "Password",
-                hintStyle: TextStyle(color: kPrimaryDarkerColor)),
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8.0),
-          child: const TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: "Confirm Password",
-                hintStyle: TextStyle(color: kPrimaryDarkerColor)),
-          ),
-        )
-      ],
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: _confirmPassword,
+              obscureText: true,
+              decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Confirm Password",
+                  hintStyle: TextStyle(color: kPrimaryDarkerColor)),
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -303,6 +345,28 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
           MaterialPageRoute(
               builder: (context) => const HomePage(type: "default")),
           (route) => false);
+    }
+  }
+
+  _validateInput() {
+    if (widget.isLogIn) {
+      if (_email.text.isNotEmpty && _password.text.isNotEmpty) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      if (_email.text.isNotEmpty &&
+          _password.text.isNotEmpty &&
+          _confirmPassword.text.isNotEmpty) {
+        if (_password.text == _confirmPassword.text) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
     }
   }
 }
