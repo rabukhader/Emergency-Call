@@ -70,7 +70,7 @@ class QPrimaryButton extends StatelessWidget {
               child: SizedBox(
                 width: 24,
                 height: 24,
-                child: CircularProgressIndicator(strokeWidth: 3, color: color == kButtonColor ? null : color),
+                child: CircularProgressIndicator(strokeWidth: 3, color: color),
               ),
             )
           : FittedBox(

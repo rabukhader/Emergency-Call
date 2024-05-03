@@ -5,7 +5,7 @@ class AuthProvider extends BaseChangeNotifier {
 
   bool get isLoggingIn => _isLoggingIn;
 
-  Future<bool> login() async {
+  Future<bool> login(String email , String password) async {
     try {
       _isLoggingIn = true;
       notifyListeners();

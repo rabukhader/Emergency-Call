@@ -21,6 +21,8 @@ class LoginSignUpPage extends StatefulWidget {
 
 class _LoginSignUpPageState extends State<LoginSignUpPage> {
   bool isLogIn = false;
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
 
   @override
   void initState() {
@@ -137,14 +139,12 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                                     onPressed: isLogIn
                                         ? () async {
                                             bool result =
-                                                await authProvider.login();
+                                                await authProvider.login(
+                                                    _email.text,
+                                                    _password.text);
+
                                             if (result) {
-                                              Navigator.pushAndRemoveUntil(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const HomePage()),
-                                                  (route) => false);
+                                              manageNavigation();
                                             } else {
                                               ErrorUtils.showGeneralError(
                                                   context,
@@ -155,12 +155,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                                             bool result =
                                                 await authProvider.signUp();
                                             if (result) {
-                                              Navigator.pushAndRemoveUntil(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const HomePage()),
-                                                  (route) => false);
+                                            manageNavigation();
                                             } else {
                                               ErrorUtils.showGeneralError(
                                                   context,
@@ -207,28 +202,32 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
   }
 
   _loginForm() {
-    return Column(
-      children: <Widget>[
-        Container(
-          padding: const EdgeInsets.all(8.0),
-          child: const TextField(
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: "Email",
-                hintStyle: TextStyle(color: kPrimaryDarkerColor)),
+    return Form(
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: _email,
+              decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Email",
+                  hintStyle: TextStyle(color: kPrimaryDarkerColor)),
+            ),
           ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8.0),
-          child: const TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: "Password",
-                hintStyle: TextStyle(color: kPrimaryDarkerColor)),
-          ),
-        )
-      ],
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: _password,
+              obscureText: true,
+              decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Password",
+                  hintStyle: TextStyle(color: kPrimaryDarkerColor)),
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -275,5 +274,35 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         )
       ],
     );
+  }
+
+  void manageNavigation() {
+    if (_email.text.contains("police")) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const HomePage(type: "police")),
+          (route) => false);
+    } else if (_email.text.contains("ambulance")) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const HomePage(
+                    type: "ambulance",
+                  )),
+          (route) => false);
+    } else if (_email.text.contains("civil")) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const HomePage(type: "civil")),
+          (route) => false);
+    } else {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const HomePage(type: "default")),
+          (route) => false);
+    }
   }
 }

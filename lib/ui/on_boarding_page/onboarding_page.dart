@@ -137,7 +137,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   }
 
   _goToSignUp() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage(type:"default")));
   }
 
   _goToLogin() {
