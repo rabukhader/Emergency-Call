@@ -1,6 +1,7 @@
 import 'package:emergancy_call/ui/home/emergency_page/emergency_page.dart';
 import 'package:emergancy_call/ui/home/home_page_provider.dart';
 import 'package:emergancy_call/ui/home/profile_page/profile_page.dart';
+import 'package:emergancy_call/ui/home/reports_page/reports_page.dart';
 import 'package:emergancy_call/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +41,7 @@ class _HomePageState extends State<HomePage> {
               },
               items: const [
                 BottomNavigationBarItem(label: "Home", icon: Icon(Icons.home)),
+                BottomNavigationBarItem(label: "Reports", icon: Icon(Icons.present_to_all)),
                 BottomNavigationBarItem(label: "Profile", icon: Icon(Icons.person)),
               ],
             ),
@@ -53,7 +55,9 @@ class _HomePageState extends State<HomePage> {
     switch(index){
       case 0: 
         return const EmergencyPage();
-      case 1: 
+        case 1: 
+        return const ReportsPage();
+      case 2: 
         return const ProfilePage();
     }
   }
