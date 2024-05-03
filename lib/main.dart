@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:emergancy_call/app/amank_app.dart';
+import 'package:emergancy_call/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 
 Future<void> main() async {
   runZonedGuarded<Future<void>>(() async {
@@ -13,6 +14,9 @@ Future<void> main() async {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     _setupGetIt();
 
     await _preInit();

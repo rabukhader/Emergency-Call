@@ -1,6 +1,5 @@
 import 'package:emergancy_call/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class DatePicker extends StatelessWidget {
   final DateTime date;
@@ -19,12 +18,7 @@ class DatePicker extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [const Text("Date"), Text(date.formatDateTime("yyyy-MM-dd"))],
+          children: [const Text("Date"), Text(date.toString())],
         ));
-  }
-}
-extension C on DateTime {
-  String formatDateTime(String formatKey) {
-    return DateFormat(formatKey, 'en').format(this);
   }
 }
