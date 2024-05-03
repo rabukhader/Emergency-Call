@@ -1,5 +1,4 @@
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:emergancy_call/ui/home/home_page.dart';
 import 'package:emergancy_call/ui/login-signup/login_signup.dart';
 import 'package:emergancy_call/ui/on_boarding_page/onboarding_view.dart';
 import 'package:emergancy_call/utils/buttons.dart';
@@ -137,7 +136,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   }
 
   _goToSignUp() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage(type:"default")));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginSignUpPage(isLogIn:false)));
   }
 
   _goToLogin() {

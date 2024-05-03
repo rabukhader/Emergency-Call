@@ -9,18 +9,18 @@ class ErrorUtils {
   static Future<dynamic> showGeneralError(
       BuildContext context, dynamic exception,
       {Duration? duration}) async {
-    // String message = S.of(context).somethingWentWrongPleaseTryAgain;
+    String message = "Something Went Wrong Please Try Again";
 
     if (exception is NoInternetConnectionException) {
-      // message = S.of(context).noInternetErrorMessage;
+      message = "No Internet";
     } else if (exception is ApiException) {
       if (exception.message != null && exception.message!.isNotEmpty) {
-        // message = exception.message!;
+        message = exception.message!;
       }
     } else if (exception is String) {
-      // message = exception;
+      message = exception;
     } else if (kDebugMode) {
-      // message = exception.toString();
+      message = exception.toString();
     }
 
     Flushbar flushBar = Flushbar(
@@ -37,9 +37,9 @@ class ErrorUtils {
             },
           ),
           const SizedBox(width: 8),
-          const Expanded(
+          Expanded(
               child:
-                  Text("message", style: TextStyle(color: Colors.white))),
+                  Text(message, style: const TextStyle(color: Colors.white))),
         ],
       ),
       margin: const EdgeInsets.fromLTRB(32, 12, 32, 12),
@@ -49,8 +49,7 @@ class ErrorUtils {
     return flushBar.show(context);
   }
 
-  /// Show green snack-bar on top of the app.
-  /// with [message].
+
   static Future<dynamic> showSuccessMessage(
       BuildContext context, String message) {
     Flushbar flushBar = Flushbar(
