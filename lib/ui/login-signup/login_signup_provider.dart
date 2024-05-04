@@ -12,8 +12,9 @@ class AuthProvider extends BaseChangeNotifier {
 
       _isLoggingIn = true;
       notifyListeners();
-      await FirebaseAuth.instance
+      UserCredential user = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+          print(user.user?.uid);
           await _saveLoginInfo(email , password);
       return "pass";
     } on FirebaseAuthException catch (e) {

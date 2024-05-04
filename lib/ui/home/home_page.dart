@@ -23,7 +23,6 @@ class _HomePageState extends State<HomePage> {
     return ChangeNotifierProvider(
         create: (context) => HomePageProvider(),
         builder: (context, snapshot) {
-          // ignore: unused_local_variable
           HomePageProvider model = context.watch();
           return Scaffold(
               appBar: AppBar(
@@ -53,14 +52,14 @@ class _HomePageState extends State<HomePage> {
                       label: "Profile", icon: Icon(Icons.person)),
                 ],
               ),
-              body: _buildScreenAt(context, _selectedPage));
+              body: _buildScreenAt(context, _selectedPage, model.onCall));
         });
   }
 
-  _buildScreenAt(BuildContext context, int index) {
+  _buildScreenAt(BuildContext context, int index, onCall) {
     switch (index) {
       case 0:
-        return getMainPage();
+        return getMainPage(onCall);
       case 1:
         return getSecondPage();
       case 2:
@@ -68,14 +67,15 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  getMainPage() {
+  getMainPage(onCall) {
     if (widget.type == "default") {
-      return const EmergencyPage();
+      return EmergencyPage(onCall: onCall);
     } else {
       return DashboardPage(type: widget.type);
     }
   }
-    getSecondPage() {
+    
+  getSecondPage() {
     if (widget.type == "default") {
       return const ReportsPage();
     } else {
