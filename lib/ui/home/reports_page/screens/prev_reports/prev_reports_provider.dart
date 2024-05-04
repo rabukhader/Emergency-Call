@@ -1,3 +1,4 @@
+import 'package:emergancy_call/model/emergency.dart';
 import 'package:emergancy_call/model/report.dart';
 import 'package:emergancy_call/model/user.dart';
 import 'package:emergancy_call/provider/base.dart';
@@ -38,7 +39,9 @@ class PreviousReportsProvider extends BaseChangeNotifier {
         String title = doc['title'];
         String description = doc['description'];
         Timestamp dateTime = doc['date'];
+        EmergencyType type = Formatter.stringToEmergencyType(doc['type']);
         Report report = Report(
+          type: type,
             title: title,
             description: description,
             date: Formatter.convertTimestampToDateTime(dateTime));

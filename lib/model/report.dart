@@ -1,21 +1,32 @@
+import 'package:emergancy_call/model/emergency.dart';
 import 'package:emergancy_call/utils/formatter.dart';
 
 class Report {
   final String title;
   final String description;
   final DateTime date;
+  final EmergencyType type;
+  int? userNumber;
 
-  Report({required this.title,required this.description,required this.date});
+  Report(
+      {this.userNumber,
+      required this.title,
+      required this.description,
+      required this.date,
+      required this.type});
 
-   Map<String, dynamic> toJson() => {
-    "title" : title,
-    "description" :description,
-    "date" : date
-  };
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "description": description,
+        "date": date,
+        "type": Formatter.emergencyTypeToString(type),
+        if (userNumber != null) "userNumber": userNumber
+      };
 
-    factory Report.fromJson(Map<String,dynamic> json) => Report(
-    title: json['title'],
-    description: json['description'],
-    date: Formatter.convertTimestampToDateTime(json['date'])
-  );
+  factory Report.fromJson(Map<String, dynamic> json) => Report(
+      userNumber: json['userNumber'],
+      title: json['title'],
+      description: json['description'],
+      date: Formatter.convertTimestampToDateTime(json['date']),
+      type: Formatter.stringToEmergencyType(json['type']));
 }

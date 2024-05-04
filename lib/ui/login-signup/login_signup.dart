@@ -27,6 +27,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
+  final TextEditingController _phone = TextEditingController();
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
 
   @override
@@ -38,9 +39,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => AuthProvider(
-          authStore: GetIt.I<AuthStore>()
-        ),
+        create: (context) => AuthProvider(authStore: GetIt.I<AuthStore>()),
         builder: (context, snapshot) {
           AuthProvider authProvider = context.watch();
           return Scaffold(
@@ -161,7 +160,8 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                                             String result =
                                                 await authProvider.signUp(
                                                     _email.text,
-                                                    _password.text);
+                                                    _password.text,
+                                                    int.parse(_phone.text));
                                             if (result == "pass") {
                                               manageNavigation();
                                             } else {
@@ -298,6 +298,32 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                   _validateInput();
                 });
               },
+              keyboardType: TextInputType.number,
+              controller: _phone,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return null;
+                }
+                if (!Validator.phoneNumerValidation(value)) {
+                  return "Please enter a valid Phone Number";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Phone Number",
+                  hintStyle: TextStyle(color: kPrimaryDarkerColor)),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _formState.currentState!.validate();
+                  _validateInput();
+                });
+              },
               controller: _password,
               obscureText: true,
               decoration: const InputDecoration(
@@ -368,7 +394,8 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
     } else {
       if (_email.text.isNotEmpty &&
           _password.text.isNotEmpty &&
-          _confirmPassword.text.isNotEmpty) {
+          _confirmPassword.text.isNotEmpty &&
+          _phone.text.isNotEmpty) {
         if (_password.text == _confirmPassword.text) {
           return true;
         } else {

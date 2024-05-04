@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emergancy_call/provider/base.dart';
 import 'package:emergancy_call/services/auth_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,7 +36,7 @@ class AuthProvider extends BaseChangeNotifier {
     }
   }
 
-  Future<String> signUp(String email, String password) async {
+  Future<String> signUp(String email, String password, int phoneNumber) async {
     try {
       _isLoggingIn = true;
       notifyListeners();
@@ -44,6 +45,12 @@ class AuthProvider extends BaseChangeNotifier {
         email: email,
         password: password,
       );
+      CollectionReference userCollectionRef =
+          FirebaseFirestore.instance.collection('user');
+      await userCollectionRef
+          .doc(user.user?.uid ?? "")
+          .set({"number": phoneNumber});
+
       await _saveLoginInfo(user.user?.uid ?? "", email, password);
       return "pass";
     } on FirebaseAuthException catch (e) {
@@ -63,7 +70,12 @@ class AuthProvider extends BaseChangeNotifier {
   }
 
   _saveLoginInfo(String id, String email, String password) async {
-    await authStore
-        .saveUser(e_user.User(id: id, email: email, password: password));
+    DocumentReference userDocRef =
+        FirebaseFirestore.instance.collection('user').doc(id);
+    DocumentSnapshot documentSnapshot = await userDocRef.get();
+    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+
+    await authStore.saveUser(e_user.User(
+        id: id, email: email, password: password, userNumber: data['number']));
   }
 }
