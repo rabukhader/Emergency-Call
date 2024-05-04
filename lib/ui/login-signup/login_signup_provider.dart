@@ -1,9 +1,13 @@
 import 'package:emergancy_call/provider/base.dart';
+import 'package:emergancy_call/services/auth_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:emergancy_call/model/user.dart' as e_user;
 
 class AuthProvider extends BaseChangeNotifier {
+  final AuthStore authStore;
   bool _isLoggingIn = false;
+
+  AuthProvider({required this.authStore});
 
   bool get isLoggingIn => _isLoggingIn;
 
@@ -13,7 +17,7 @@ class AuthProvider extends BaseChangeNotifier {
       notifyListeners();
       UserCredential user = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      await _saveLoginInfo(email, password);
+      await _saveLoginInfo(user.user?.uid ?? "", email, password);
       return "pass";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -35,11 +39,12 @@ class AuthProvider extends BaseChangeNotifier {
     try {
       _isLoggingIn = true;
       notifyListeners();
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential user =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      await _saveLoginInfo(email, password);
+      await _saveLoginInfo(user.user?.uid ?? "", email, password);
       return "pass";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -57,9 +62,8 @@ class AuthProvider extends BaseChangeNotifier {
     }
   }
 
-  _saveLoginInfo(String email, String password) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString("USEREMAIL", email);
-    await pref.setString("USERPASSWORD", password);
+  _saveLoginInfo(String id, String email, String password) async {
+    await authStore
+        .saveUser(e_user.User(id: id, email: email, password: password));
   }
 }

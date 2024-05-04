@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:emergancy_call/services/auth_store.dart';
 import 'package:emergancy_call/ui/home/home_page.dart';
 import 'package:emergancy_call/ui/login-signup/login_signup_provider.dart';
 import 'package:emergancy_call/utils/buttons.dart';
@@ -10,6 +11,7 @@ import 'package:emergancy_call/utils/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class LoginSignUpPage extends StatefulWidget {
@@ -36,7 +38,9 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => AuthProvider(),
+        create: (context) => AuthProvider(
+          authStore: GetIt.I<AuthStore>()
+        ),
         builder: (context, snapshot) {
           AuthProvider authProvider = context.watch();
           return Scaffold(

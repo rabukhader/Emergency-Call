@@ -1,4 +1,5 @@
 import 'package:emergancy_call/utils/colors.dart';
+import 'package:emergancy_call/utils/formatter.dart';
 import 'package:flutter/material.dart';
 
 class DatePicker extends StatelessWidget {
@@ -9,16 +10,14 @@ class DatePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
-        height: 60,
-        margin: const EdgeInsets.all(5.0),
-        padding: const EdgeInsets.all(8.0),
+        height: 50,
         decoration: BoxDecoration(
           color: kPrimaryColor,
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [const Text("Date"), Text(date.toString())],
+          children: [const Text("Date"), Text(Formatter.formatDateTimeToString(date))],
         ));
   }
 }
