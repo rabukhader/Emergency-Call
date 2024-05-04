@@ -64,7 +64,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                                   decoration: const BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage(
-                                              'assets/images/light-2.png'))),
+                                              'assets/images/light-1.png'))),
                                 )),
                           ),
                           Positioned(
@@ -146,7 +146,6 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                                                 await authProvider.login(
                                                     _email.text,
                                                     _password.text);
-                                            print(result);
                                             if (result == "pass") {
                                               manageNavigation();
                                             } else {
@@ -291,6 +290,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
             child: TextFormField(
               onChanged: (value) {
                 setState(() {
+                  _formState.currentState!.validate();
                   _validateInput();
                 });
               },
@@ -305,6 +305,12 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
           Container(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _formState.currentState!.validate();
+                  _validateInput();
+                });
+              },
               controller: _confirmPassword,
               obscureText: true,
               decoration: const InputDecoration(

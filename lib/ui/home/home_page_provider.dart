@@ -49,7 +49,6 @@ class HomePageProvider extends BaseChangeNotifier {
       notifyListeners();
       Emergency nearestEmergency = await findNearest(type);
     String url = 'tel:${nearestEmergency.phone}';
-      print(await canLaunchUrl(Uri.parse(url)));
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
     } else {

@@ -9,13 +9,11 @@ class AuthProvider extends BaseChangeNotifier {
 
   Future<String> login(String email, String password) async {
     try {
-
       _isLoggingIn = true;
       notifyListeners();
       UserCredential user = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-          print(user.user?.uid);
-          await _saveLoginInfo(email , password);
+      await _saveLoginInfo(email, password);
       return "pass";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -41,6 +39,7 @@ class AuthProvider extends BaseChangeNotifier {
         email: email,
         password: password,
       );
+      await _saveLoginInfo(email, password);
       return "pass";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -58,10 +57,9 @@ class AuthProvider extends BaseChangeNotifier {
     }
   }
 
-  _saveLoginInfo(String email, String password)async{ 
+  _saveLoginInfo(String email, String password) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("USEREMAIL", email);
     await pref.setString("USERPASSWORD", password);
-}
-
+  }
 }
