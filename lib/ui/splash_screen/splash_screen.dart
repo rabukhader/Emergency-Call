@@ -1,3 +1,5 @@
+import 'package:emergancy_call/model/user.dart';
+import 'package:emergancy_call/services/auth_store.dart';
 import 'package:emergancy_call/ui/home/home_page.dart';
 import 'package:emergancy_call/ui/on_boarding_page/onboarding_page.dart';
 import 'package:emergancy_call/utils/cache_picture.dart';
@@ -5,6 +7,7 @@ import 'package:emergancy_call/utils/colors.dart';
 import 'package:emergancy_call/utils/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -64,10 +67,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _onSplashCompleted() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    if (pref.getString("USEREMAIL") != null &&
-        pref.getString("USERPASSWORD") != null) {
-          manageNavigation(pref.getString("USEREMAIL") ?? "");
+    User? user = await GetIt.I<AuthStore>().getUser();
+    if (user != null) {
+          manageNavigation(user.email);
     } else {
       Navigator.pushAndRemoveUntil(
           context,
