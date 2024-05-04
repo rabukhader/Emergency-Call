@@ -1,9 +1,11 @@
+import 'package:emergancy_call/model/emergency.dart';
 import 'package:emergancy_call/model/report.dart';
 import 'package:emergancy_call/services/auth_store.dart';
 import 'package:emergancy_call/ui/home/reports_page/screens/add_new_report/add_new_report_provider.dart';
 import 'package:emergancy_call/utils/buttons.dart';
 import 'package:emergancy_call/utils/colors.dart';
 import 'package:emergancy_call/utils/date_picker.dart';
+import 'package:emergancy_call/utils/formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
@@ -21,6 +23,13 @@ class _AddNewReportState extends State<AddNewReport> {
   final TextEditingController _description = TextEditingController();
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
   DateTime? selectedDate = DateTime.now();
+  EmergencyType? _selectedType;
+
+  List<EmergencyType> choices = [
+    EmergencyType.police,
+    EmergencyType.ambulance,
+    EmergencyType.civil
+  ];
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -82,6 +91,28 @@ class _AddNewReportState extends State<AddNewReport> {
                             vertical: 6, horizontal: 12),
                         padding: const EdgeInsets.symmetric(
                             vertical: 6, horizontal: 12),
+                        child: DropdownButtonFormField<EmergencyType>(
+                          value: _selectedType ?? EmergencyType.ambulance,
+                          onChanged: (value) {
+                            _selectedType = value;
+                          },
+                          items: choices
+                              .map<DropdownMenuItem<EmergencyType>>(
+                                (EmergencyType value) =>
+                                    DropdownMenuItem<EmergencyType>(
+                                  value: value,
+                                  child: Text(
+                                      Formatter.emergencyTypeToString(value)),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 6, horizontal: 12),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 6, horizontal: 12),
                         child: GestureDetector(
                           onTap: () async {
                             selectedDate = await model.showDate(context);
@@ -105,11 +136,12 @@ class _AddNewReportState extends State<AddNewReport> {
                           enabled: _validateInput(),
                           onPressed: () {
                             model.addNewReport(Report(
+                                type: _selectedType ?? EmergencyType.ambulance,
                                 title: _title.text,
                                 description: _description.text,
                                 date: selectedDate ?? DateTime.now()));
-                              clear();
-                              setState((){});
+                            clear();
+                            setState(() {});
                           },
                           isLoading: model.isAdding,
                         ),
@@ -126,7 +158,8 @@ class _AddNewReportState extends State<AddNewReport> {
   _validateInput() {
     return (_title.text.isNotEmpty && _description.text.isNotEmpty);
   }
-  clear(){
+
+  clear() {
     _title.text = "";
     _description.text = "";
     selectedDate = DateTime.now();
