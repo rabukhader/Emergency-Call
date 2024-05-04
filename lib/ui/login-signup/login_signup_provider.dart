@@ -62,6 +62,7 @@ class AuthProvider extends BaseChangeNotifier {
         return "Something went wrong, Please try again";
       }
     } catch (e) {
+      print (e.toString());
       return e.toString();
     } finally {
       _isLoggingIn = false;
