@@ -16,18 +16,5 @@ Future<void> main() async {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-    _setupGetIt();
-
-    await _preInit();
-
     runApp(const AmankApp());
-  
-}
-
-void _setupGetIt() {
-  //lazy singelton registration for repos, apis, all needed
-}
-
-Future _preInit() async {
-  //initing the cookie managers and repos
 }

@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -87,7 +88,7 @@ class ProfilePage extends StatelessWidget {
                 textColor: Colors.red,
                 endIcon: false,
                 onPress: () async {
-                  await FirebaseAuth.instance.signOut();
+                  await logout();
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -97,6 +98,12 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  logout() async {
+    await FirebaseAuth.instance.signOut();
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.clear();
   }
 }
 
