@@ -1,10 +1,13 @@
+import 'package:emergancy_call/model/emergency.dart';
 import 'package:emergancy_call/utils/buttons.dart';
 import 'package:emergancy_call/utils/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class EmergencyPage extends StatelessWidget {
-  const EmergencyPage({super.key});
+  final Function(EmergencyType) onCall;
+  const EmergencyPage({super.key, required this.onCall});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +28,16 @@ class EmergencyPage extends StatelessWidget {
             QPrimaryButton.icon(
               label: "Call Police",
               icon: const Icon(Icons.phone),
-              onPressed: () {},
+              onPressed: () async {
+                await onCall.call(EmergencyType.police);
+              },
             ),
             QPrimaryButton.icon(
               label: "Call Ambulance",
               icon: const Icon(Icons.phone),
-              onPressed: () {},
+              onPressed: () async{
+                await onCall.call(EmergencyType.ambulance);
+              },
             ),
           ],
         ),
@@ -45,7 +52,9 @@ class EmergencyPage extends StatelessWidget {
             QPrimaryButton.icon(
               label: "Call Civil Defense",
               icon: const Icon(Icons.phone),
-              onPressed: () {},
+              onPressed: () async{
+                await onCall.call(EmergencyType.civil);
+              },
             ),
           ],
         ),

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 Future<void> main() async {
-  runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -22,9 +21,7 @@ Future<void> main() async {
     await _preInit();
 
     runApp(const AmankApp());
-  }, (error, stack) {
-    //handling system errors
-  });
+  
 }
 
 void _setupGetIt() {
