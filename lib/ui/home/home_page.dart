@@ -1,4 +1,4 @@
-import 'package:emergancy_call/ui/home/dashboard/dahsboard.dart';
+import 'package:emergancy_call/ui/home/emeregency_dashboard/emeregency_dashboard.dart';
 import 'package:emergancy_call/ui/home/emergency_page/emergency_page.dart';
 import 'package:emergancy_call/ui/home/home_page_provider.dart';
 import 'package:emergancy_call/ui/home/profile_page/profile_page.dart';

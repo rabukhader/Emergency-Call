@@ -359,21 +359,21 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => const HomePage(type: "police")),
+              builder: (context) => const HomePage(type: "POLICE")),
           (route) => false);
     } else if (_email.text.contains("ambulance")) {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
               builder: (context) => const HomePage(
-                    type: "ambulance",
+                    type: "AMBULANCE",
                   )),
           (route) => false);
     } else if (_email.text.contains("civil")) {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => const HomePage(type: "civil")),
+              builder: (context) => const HomePage(type: "CIVIL")),
           (route) => false);
     } else {
       Navigator.pushAndRemoveUntil(
