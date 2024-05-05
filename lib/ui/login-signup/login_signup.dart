@@ -67,7 +67,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                                   decoration: const BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage(
-                                              'assets/images/light-1.png'))),
+                                              kClock))),
                                 )),
                           ),
                           Positioned(
@@ -80,7 +80,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                                   decoration: const BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage(
-                                              'assets/images/light-2.png'))),
+                                              kClock2))),
                                 )),
                           ),
                           Positioned(
@@ -90,7 +90,12 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                             height: 150,
                             child: FadeInUp(
                                 duration: const Duration(milliseconds: 1300),
-                                child: SvgPicture.asset(kClock)),
+                                child:  Container(
+                                  decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              kClock2))),
+                                )),
                           ),
                           Positioned(
                             child: FadeInUp(
