@@ -10,7 +10,6 @@ import 'package:emergancy_call/utils/toaster.dart';
 import 'package:emergancy_call/utils/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 

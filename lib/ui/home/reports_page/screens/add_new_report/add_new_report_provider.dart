@@ -1,5 +1,4 @@
 import 'package:emergancy_call/model/report.dart';
-import 'package:emergancy_call/provider/base.dart';
 import 'package:emergancy_call/services/auth_store.dart';
 import 'package:emergancy_call/model/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,7 +6,7 @@ import 'package:emergancy_call/utils/colors.dart';
 import 'package:emergancy_call/utils/formatter.dart';
 import 'package:flutter/material.dart';
 
-class AddNewReportProvider extends BaseChangeNotifier {
+class AddNewReportProvider extends ChangeNotifier {
   final AuthStore authStore;
 
   bool _isAdding = false;

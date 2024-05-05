@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:emergancy_call/provider/base.dart';
 import 'package:emergancy_call/services/auth_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:emergancy_call/model/user.dart' as e_user;
+import 'package:flutter/material.dart';
 
-class AuthProvider extends BaseChangeNotifier {
+class AuthProvider extends ChangeNotifier {
   final AuthStore authStore;
   bool _isLoggingIn = false;
 

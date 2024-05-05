@@ -3,12 +3,12 @@
 import 'dart:math';
 
 import 'package:emergancy_call/model/emergency.dart';
-import 'package:emergancy_call/provider/base.dart';
 import 'package:emergancy_call/utils/emergency_list.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HomePageProvider extends BaseChangeNotifier {
+class HomePageProvider extends ChangeNotifier {
   double? userLatitude;
   double? userLongitude;
 
