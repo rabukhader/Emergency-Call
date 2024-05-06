@@ -27,6 +27,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
   final TextEditingController _password = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
   final TextEditingController _phone = TextEditingController();
+  Gender _selectedGender = Gender.male;
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
 
   @override
@@ -65,8 +66,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                                 child: Container(
                                   decoration: const BoxDecoration(
                                       image: DecorationImage(
-                                          image: AssetImage(
-                                              kClock))),
+                                          image: AssetImage(kClock))),
                                 )),
                           ),
                           Positioned(
@@ -78,8 +78,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                                 child: Container(
                                   decoration: const BoxDecoration(
                                       image: DecorationImage(
-                                          image: AssetImage(
-                                              kClock2))),
+                                          image: AssetImage(kClock2))),
                                 )),
                           ),
                           Positioned(
@@ -89,11 +88,10 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                             height: 150,
                             child: FadeInUp(
                                 duration: const Duration(milliseconds: 1300),
-                                child:  Container(
+                                child: Container(
                                   decoration: const BoxDecoration(
                                       image: DecorationImage(
-                                          image: AssetImage(
-                                              kClock2))),
+                                          image: AssetImage(kClock2))),
                                 )),
                           ),
                           Positioned(
@@ -165,7 +163,8 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                                                 await authProvider.signUp(
                                                     _email.text,
                                                     _password.text,
-                                                    int.parse(_phone.text));
+                                                    int.parse(_phone.text),
+                                                    getGender());
                                             if (result == "pass") {
                                               manageNavigation();
                                             } else {
@@ -177,7 +176,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                                 ],
                               )),
                           const SizedBox(
-                            height: 70,
+                            height: 30,
                           ),
                           FadeInUp(
                               duration: const Duration(milliseconds: 2000),
@@ -352,7 +351,37 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                   hintText: "Confirm Password",
                   hintStyle: TextStyle(color: kPrimaryDarkerColor)),
             ),
-          )
+          ),
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Radio<Gender>(
+                  activeColor: kPrimaryColor,
+                  value: Gender.male,
+                  groupValue: _selectedGender,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedGender = value ?? Gender.male;
+                    });
+                  },
+                ),
+                const Text("Male"),
+                const SizedBox(width: 20),
+                Radio<Gender>(
+                  activeColor: kPrimaryColor,
+                  value: Gender.female,
+                  groupValue: _selectedGender,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedGender = value ?? Gender.male;
+                    });
+                  },
+                ),
+                const Text('Female'),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -410,4 +439,20 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
       }
     }
   }
+
+  String getGender() {
+    switch (_selectedGender) {
+      case Gender.male:
+        return "male";
+      case Gender.female:
+        return "female";
+      default:
+        return "";
+    }
+  }
+}
+
+enum Gender {
+  male,
+  female,
 }

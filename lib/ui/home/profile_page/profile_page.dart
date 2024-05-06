@@ -36,7 +36,7 @@ class ProfilePage extends StatelessWidget {
                               height: 120,
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(100),
-                                  child: SvgPicture.asset(kProfileFemale)),
+                                  child: SvgPicture.asset(provider.getGender == 'female' ?  kProfileFemale : kProfileMale)),
                             ),
                             Positioned(
                               bottom: 0,

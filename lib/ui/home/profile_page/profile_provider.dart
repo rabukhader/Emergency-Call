@@ -27,4 +27,7 @@ class ProfileProvider extends ChangeNotifier {
   String? get getEmail => userData?.email;
 
   int? get getPhone => userData?.userNumber;
+
+  String? get getGender =>userData?.gender;
+  
 }
