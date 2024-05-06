@@ -36,7 +36,8 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<String> signUp(String email, String password, int phoneNumber) async {
+  Future<String> signUp(
+      String email, String password, int phoneNumber, String gender) async {
     try {
       _isLoggingIn = true;
       notifyListeners();
@@ -49,7 +50,7 @@ class AuthProvider extends ChangeNotifier {
           FirebaseFirestore.instance.collection('user');
       await userCollectionRef
           .doc(user.user?.uid ?? "")
-          .set({"number": phoneNumber});
+          .set({"number": phoneNumber, "gender": gender});
 
       await _saveLoginInfo(user.user?.uid ?? "", email, password);
       return "pass";
@@ -62,7 +63,7 @@ class AuthProvider extends ChangeNotifier {
         return "Something went wrong, Please try again";
       }
     } catch (e) {
-      print (e.toString());
+      print(e.toString());
       return e.toString();
     } finally {
       _isLoggingIn = false;
@@ -77,6 +78,10 @@ class AuthProvider extends ChangeNotifier {
     Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
 
     await authStore.saveUser(e_user.User(
-        id: id, email: email, password: password, userNumber: data['number']));
+        id: id,
+        email: email,
+        password: password,
+        userNumber: data['number'],
+        gender: data['gender']));
   }
 }
