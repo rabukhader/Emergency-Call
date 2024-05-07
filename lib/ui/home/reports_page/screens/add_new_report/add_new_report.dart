@@ -5,7 +5,6 @@ import 'package:emergancy_call/ui/home/reports_page/screens/add_new_report/add_n
 import 'package:emergancy_call/utils/buttons.dart';
 import 'package:emergancy_call/utils/colors.dart';
 import 'package:emergancy_call/utils/date_picker.dart';
-import 'package:emergancy_call/utils/formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -20,15 +19,11 @@ class AddNewReport extends StatefulWidget {
 class _AddNewReportState extends State<AddNewReport> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _description = TextEditingController();
+  final TextEditingController _policeName = TextEditingController();
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
   DateTime? selectedDate = DateTime.now();
   EmergencyType? _selectedType;
 
-  List<EmergencyType> choices = [
-    EmergencyType.police,
-    EmergencyType.ambulance,
-    EmergencyType.civil
-  ];
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -86,27 +81,24 @@ class _AddNewReportState extends State<AddNewReport> {
                                     TextStyle(color: kPrimaryDarkerColor)),
                           )),
                       Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 6, horizontal: 12),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 6, horizontal: 12),
-                        child: DropdownButtonFormField<EmergencyType>(
-                          value: _selectedType ?? EmergencyType.ambulance,
-                          onChanged: (value) {
-                            _selectedType = value;
-                          },
-                          items: choices
-                              .map<DropdownMenuItem<EmergencyType>>(
-                                (EmergencyType value) =>
-                                    DropdownMenuItem<EmergencyType>(
-                                  value: value,
-                                  child: Text(
-                                      Formatter.emergencyTypeToString(value)),
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 6, horizontal: 12),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 6, horizontal: 12),
+                          child: TextFormField(
+                            onChanged: (value) {
+                              setState(() {
+                                _formState.currentState!.validate();
+                                _validateInput();
+                              });
+                            },
+                            controller: _policeName,
+                            decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Police Officer",
+                                hintStyle:
+                                    TextStyle(color: kPrimaryDarkerColor)),
+                          )),
                       Container(
                         margin: const EdgeInsets.symmetric(
                             vertical: 6, horizontal: 12),
@@ -155,12 +147,15 @@ class _AddNewReportState extends State<AddNewReport> {
   }
 
   _validateInput() {
-    return (_title.text.isNotEmpty && _description.text.isNotEmpty);
+    return (_title.text.isNotEmpty &&
+        _description.text.isNotEmpty &&
+        _policeName.text.isNotEmpty);
   }
 
   clear() {
     _title.text = "";
     _description.text = "";
+    _policeName.text = "";
     selectedDate = DateTime.now();
   }
 }
