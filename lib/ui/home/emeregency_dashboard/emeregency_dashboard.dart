@@ -140,7 +140,7 @@ class RecentCallCard extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            Text('User ID: ${call.user.nationalId}'),
+            Text('User ID: ${call.user.userNumber}'),
             Text('Email: ${call.user.email}'),
             Text('Time: ${call.time}'),
             Text('Gender: ${call.user.gender}'),

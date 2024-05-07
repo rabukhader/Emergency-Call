@@ -23,4 +23,9 @@ class Validator {
     RegExp digitRegExp = RegExp(r'^[0-9]+$');
     return digitRegExp.hasMatch(value);
   }
+
+  static bool isFullNameValid(String fullName) {
+  RegExp regex = RegExp(r'^[a-zA-Z]+( [a-zA-Z]+)+$');
+  return regex.hasMatch(fullName);
+}
 }
