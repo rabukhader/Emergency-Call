@@ -27,6 +27,8 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
   final TextEditingController _password = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
   final TextEditingController _phone = TextEditingController();
+  final TextEditingController _nationalId = TextEditingController();
+  final TextEditingController _fullName = TextEditingController();
   Gender _selectedGender = Gender.male;
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
 
@@ -98,7 +100,8 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                             child: FadeInUp(
                                 duration: const Duration(milliseconds: 1600),
                                 child: Container(
-                                  margin: const EdgeInsets.only(top: 50),
+                                  margin:
+                                      EdgeInsets.only(top: isLogIn ? 50 : 20),
                                   child: Center(
                                     child: Text(
                                       isLogIn ? "Login" : "Sign Up",
@@ -114,7 +117,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(25.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: Column(
                         children: <Widget>[
                           FadeInUp(
@@ -163,7 +166,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                                                 await authProvider.signUp(
                                                     _email.text,
                                                     _password.text,
-                                                    int.parse(_phone.text),
+                                                    int.parse(_phone.text),_nationalId.text , _fullName.text,
                                                     getGender());
                                             if (result == "pass") {
                                               manageNavigation();
@@ -176,7 +179,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                                 ],
                               )),
                           const SizedBox(
-                            height: 30,
+                            height: 10,
                           ),
                           FadeInUp(
                               duration: const Duration(milliseconds: 2000),
@@ -280,6 +283,31 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                 if (value == null || value.isEmpty) {
                   return null;
                 }
+                if (!Validator.isFullNameValid(value)) {
+                  return "Please enter a valid full name";
+                }
+                return null;
+              },
+              controller: _fullName,
+              decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Full Name",
+                  hintStyle: TextStyle(color: kPrimaryDarkerColor)),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _formState.currentState!.validate();
+                  _validateInput();
+                });
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return null;
+                }
                 if (!Validator.emailFieldValidation(value)) {
                   return "Please enter a valid email";
                 }
@@ -289,6 +317,32 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
               decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: "Email",
+                  hintStyle: TextStyle(color: kPrimaryDarkerColor)),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _formState.currentState!.validate();
+                  _validateInput();
+                });
+              },
+              keyboardType: TextInputType.number,
+              controller: _nationalId,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return null;
+                }
+                if (!Validator.isNumericWithLength(value, 8)) {
+                  return "Please enter a valid National ID";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "National ID",
                   hintStyle: TextStyle(color: kPrimaryDarkerColor)),
             ),
           ),
@@ -428,7 +482,9 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
       if (_email.text.isNotEmpty &&
           _password.text.isNotEmpty &&
           _confirmPassword.text.isNotEmpty &&
-          _phone.text.isNotEmpty) {
+          _phone.text.isNotEmpty &&
+          _fullName.text.isNotEmpty &&
+          _nationalId.text.isNotEmpty) {
         if (_password.text == _confirmPassword.text) {
           return true;
         } else {

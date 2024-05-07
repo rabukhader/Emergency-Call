@@ -37,7 +37,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<String> signUp(
-      String email, String password, int phoneNumber, String gender) async {
+      String email, String password, int phoneNumber, String nationalId, String fullName, String gender) async {
     try {
       _isLoggingIn = true;
       notifyListeners();
@@ -50,7 +50,7 @@ class AuthProvider extends ChangeNotifier {
           FirebaseFirestore.instance.collection('user');
       await userCollectionRef
           .doc(user.user?.uid ?? "")
-          .set({"number": phoneNumber, "gender": gender});
+          .set({"number": phoneNumber, "gender": gender, "nationalId" : nationalId, "fullname" : fullName});
 
       await _saveLoginInfo(user.user?.uid ?? "", email, password);
       return "pass";
