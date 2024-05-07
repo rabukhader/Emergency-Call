@@ -1,3 +1,4 @@
+import 'package:emergancy_call/services/auth_store.dart';
 import 'package:emergancy_call/ui/home/emeregency_dashboard/emeregency_dashboard.dart';
 import 'package:emergancy_call/ui/home/emergency_page/emergency_page.dart';
 import 'package:emergancy_call/ui/home/home_page_provider.dart';
@@ -6,6 +7,7 @@ import 'package:emergancy_call/ui/home/reports_page/reports_page.dart';
 import 'package:emergancy_call/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => HomePageProvider(),
+        create: (context) => HomePageProvider( GetIt.I<AuthStore>()),
         builder: (context, snapshot) {
           HomePageProvider model = context.watch();
           return Scaffold(
@@ -39,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                 unselectedItemColor: kPrimaryDarkerColor,
                 onTap: (index) {
                   setState(() {
-                      _selectedPage = index;
+                    _selectedPage = index;
                   });
                 },
                 items: [
@@ -74,7 +76,7 @@ class _HomePageState extends State<HomePage> {
       return DashboardPage(type: widget.type);
     }
   }
-    
+
   getSecondPage() {
     if (widget.type == "default") {
       return const ReportsPage();
