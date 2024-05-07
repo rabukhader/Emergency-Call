@@ -19,7 +19,7 @@ class Report {
         "title": title,
         "description": description,
         "date": date,
-        "type": Formatter.emergencyTypeToString(type),
+        "type": "POLICE",
         if (userNumber != null) "userNumber": userNumber
       };
 
