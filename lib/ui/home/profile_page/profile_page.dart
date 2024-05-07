@@ -1,6 +1,7 @@
 import 'package:emergancy_call/services/auth_store.dart';
 import 'package:emergancy_call/ui/home/profile_page/edit_profile.dart';
 import 'package:emergancy_call/ui/home/profile_page/profile_provider.dart';
+import 'package:emergancy_call/ui/home/profile_page/user_info/user_info_page.dart';
 import 'package:emergancy_call/ui/on_boarding_page/onboarding_page.dart';
 import 'package:emergancy_call/utils/colors.dart';
 import 'package:emergancy_call/utils/icons.dart';
@@ -59,7 +60,7 @@ class ProfilePage extends StatelessWidget {
                         const SizedBox(height: 10),
                         Text(provider.getEmail ?? "",
                             style: Theme.of(context).textTheme.headlineMedium),
-                        Text((provider.getPhone ?? 0).toString(),
+                        Text("0${provider.getPhone ?? 0}",
                             style: Theme.of(context).textTheme.bodyMedium),
                         const SizedBox(height: 20),
 
@@ -91,16 +92,15 @@ class ProfilePage extends StatelessWidget {
                             title: "Settings",
                             icon: LineAwesomeIcons.cog,
                             onPress: () {}),
-                        ProfileMenuWidget(
-                            title: "User Management",
-                            icon: LineAwesomeIcons.user_check,
-                            onPress: () {}),
                         const Divider(),
                         const SizedBox(height: 10),
                         ProfileMenuWidget(
                             title: "Information",
                             icon: LineAwesomeIcons.info,
-                            onPress: () {}),
+                            onPress: () async {
+                              await Navigator.push(context, MaterialPageRoute(builder: (context) => UserInfoPage(user : provider.userData)));
+                              await provider.refreshData();
+                            }),
                         const SizedBox(height: 10),
                         ProfileMenuWidget(
                             title: "Logout",

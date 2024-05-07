@@ -13,7 +13,7 @@ class ProfileProvider extends ChangeNotifier {
     init();
   }
 
-  void init() async {
+  Future<void> init() async {
     try {
       _isLoading = true;
       notifyListeners();
@@ -28,6 +28,9 @@ class ProfileProvider extends ChangeNotifier {
 
   int? get getPhone => userData?.userNumber;
 
-  String? get getGender =>userData?.gender;
-  
+  String? get getGender => userData?.gender;
+
+  Future<void> refreshData() async {
+    await init();
+  }
 }

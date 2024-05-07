@@ -6,3 +6,5 @@ const kProfileMale = "assets/icons/profileMale.svg";
 const kProfileFemale = "assets/icons/profileFemale.svg";
 const kClock = "assets/images/light-1.png";
 const kClock2 = 'assets/images/light-2.png';
+const kDashboard = 'assets/icons/dashboard.svg';
+const kThanks = 'assets/icons/thanks.svg';
