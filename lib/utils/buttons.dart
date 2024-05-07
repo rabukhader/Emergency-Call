@@ -2,8 +2,6 @@ import 'package:emergancy_call/utils/colors.dart';
 import 'package:emergancy_call/utils/fonts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 
 class QPrimaryButton extends StatelessWidget {
   const QPrimaryButton({
@@ -16,16 +14,18 @@ class QPrimaryButton extends StatelessWidget {
     this.fontSize = 17,
     this.fontWeight,
     this.isLoading = false,
+    this.loaderColor,
     this.enabled = true,
     this.padding = const EdgeInsets.symmetric(horizontal: 16),
-  })  : icon = null;
+  }) : icon = null;
 
   const QPrimaryButton.icon({
-    Key? key,
+    super.key,
     required this.label,
     this.onPressed,
     this.color = kButtonColor,
     this.textColor = Colors.white,
+    this.loaderColor,
     this.minSize = 50,
     this.fontSize = 17,
     this.fontWeight,
@@ -33,13 +33,15 @@ class QPrimaryButton extends StatelessWidget {
     this.enabled = true,
     this.padding = const EdgeInsets.symmetric(horizontal: 16),
     required this.icon,
-  }) : super(key: key);
+  });
 
   final Color color;
 
   final EdgeInsets? padding;
 
   final Color textColor;
+
+  final Color? loaderColor;
 
   final String label;
 
@@ -70,18 +72,20 @@ class QPrimaryButton extends StatelessWidget {
               child: SizedBox(
                 width: 24,
                 height: 24,
-                child: CircularProgressIndicator(strokeWidth: 3, color: color),
+                child: CircularProgressIndicator(
+                    strokeWidth: 3, color: loaderColor ?? color),
               ),
             )
           : FittedBox(
               fit: BoxFit.scaleDown,
               child: icon != null
                   ? Row(
-
                       children: [
                         icon!,
-                       const SizedBox(width: 10,),
-                       text,
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        text,
                       ],
                     )
                   : text,
@@ -93,11 +97,10 @@ class QPrimaryButton extends StatelessWidget {
         label,
         maxLines: 1,
         style: TextStyle(
-          color: textColor,
-          fontWeight: fontWeight ?? FontWeight.w500,
-          fontSize: fontSize,
-          fontFamily: kDefaultFont
-        ),
+            color: textColor,
+            fontWeight: fontWeight ?? FontWeight.w500,
+            fontSize: fontSize,
+            fontFamily: kDefaultFont),
       );
 }
 
@@ -159,151 +162,6 @@ class QSecondaryButton extends StatelessWidget {
                 fontSize: fontSize,
               ),
             ),
-    );
-  }
-}
-
-class QSecondaryButtonWithRightIcon extends StatelessWidget {
-  const QSecondaryButtonWithRightIcon({
-    Key? key,
-    required this.label,
-    this.onPressed,
-    this.fontSize = 14.5,
-    this.minSize = 50,
-    this.color = kDarkBlueColor,
-    this.isLoading = false,
-  }) : super(key: key);
-
-  final String label;
-  final VoidCallback? onPressed;
-  final double fontSize;
-  final double minSize;
-  final Color color;
-  final bool isLoading;
-
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        minimumSize: Size(minSize, minSize),
-        side: BorderSide(color: color, width: 2),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-        ),
-      ),
-      onPressed: onPressed,
-      child: isLoading
-          ? Center(
-              child: SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(
-                  strokeWidth: 3,
-                  color: color,
-                ),
-              ),
-            )
-          : Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  label,
-                  style: TextStyle(
-                    color: color,
-                    fontSize: fontSize,
-                  ),
-                ),
-                SvgPicture.asset(
-                  "kForwardArrow",
-                  color: color,
-                ),
-              ],
-            ),
-    );
-  }
-}
-
-class QSecondaryButtonWithLeftIcon extends StatelessWidget {
-  const QSecondaryButtonWithLeftIcon({
-    Key? key,
-    required this.label,
-    this.onPressed,
-    this.fontSize = 14.5,
-    this.minSize = 50,
-    this.color = kDarkBlueColor,
-    this.isLoading = false,
-  }) : super(key: key);
-
-  final String label;
-  final VoidCallback? onPressed;
-  final double fontSize;
-  final double minSize;
-  final Color color;
-  final bool isLoading;
-
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        minimumSize: Size(minSize, minSize),
-        side: BorderSide(color: color, width: 2),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-        ),
-      ),
-      onPressed: onPressed,
-      child: isLoading
-          ? Center(
-              child: SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(
-                  strokeWidth: 3,
-                  color: color,
-                ),
-              ),
-            )
-          : Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SvgPicture.asset(
-                  "kBackArrow",
-                  color: color,
-                ),
-                Text(
-                  label,
-                  style: TextStyle(
-                    color: color,
-                    fontSize: fontSize,
-                  ),
-                ),
-              ],
-            ),
-    );
-  }
-}
-
-class QTextButton extends StatelessWidget {
-  final String label;
-  final VoidCallback? onPressed;
-
-  const QTextButton({
-    Key? key,
-    required this.label,
-    this.onPressed,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      style: TextButton.styleFrom(
-        minimumSize: const Size(45, 45),
-      ),
-      child: Text(
-        label,
-        style: const TextStyle(color: kDarkBlueColor),
-      ),
     );
   }
 }

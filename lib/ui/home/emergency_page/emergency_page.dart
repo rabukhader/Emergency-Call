@@ -7,7 +7,6 @@ import 'package:flutter_svg/svg.dart';
 class EmergencyPage extends StatelessWidget {
   final Function(EmergencyType) onCall;
   const EmergencyPage({super.key, required this.onCall});
-  
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +14,15 @@ class EmergencyPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SvgPicture.asset(
-          kOnBoardingIcon1,
-          height: 150,
+          kDashboard,
+          height: 200,
         ),
         Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: const Text(
-                "loremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsumloremIpsum")),
+              "Welcome to Amank - your safety companion. With just a tap, Amank locates and connects you to the nearest emergency services - ambulance, police, and civil defense. Stay empowered in emergencies, report incidents effortlessly, and ensure your safety on the go. Your peace of mind is our priority.",
+              style: TextStyle(fontSize: 16),
+            )),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -35,7 +36,7 @@ class EmergencyPage extends StatelessWidget {
             QPrimaryButton.icon(
               label: "Call Ambulance",
               icon: const Icon(Icons.phone),
-              onPressed: () async{
+              onPressed: () async {
                 await onCall.call(EmergencyType.ambulance);
               },
             ),
@@ -52,7 +53,7 @@ class EmergencyPage extends StatelessWidget {
             QPrimaryButton.icon(
               label: "Call Civil Defense",
               icon: const Icon(Icons.phone),
-              onPressed: () async{
+              onPressed: () async {
                 await onCall.call(EmergencyType.civil);
               },
             ),
