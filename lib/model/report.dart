@@ -20,11 +20,11 @@ class Report {
         "description": description,
         "date": date,
         "type": "POLICE",
-        if (userNumber != null) "userNumber": userNumber
+        if (userNumber != null) "number": userNumber
       };
 
   factory Report.fromJson(Map<String, dynamic> json) => Report(
-      userNumber: json['userNumber'],
+      userNumber: json['number'],
       title: json['title'],
       description: json['description'],
       date: Formatter.convertTimestampToDateTime(json['date']),
