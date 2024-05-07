@@ -2,26 +2,34 @@
 
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emergancy_call/model/call.dart';
 import 'package:emergancy_call/model/emergency.dart';
+import 'package:emergancy_call/model/user.dart';
+import 'package:emergancy_call/services/auth_store.dart';
 import 'package:emergancy_call/utils/emergency_list.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePageProvider extends ChangeNotifier {
+  final AuthStore authStore;
   double? userLatitude;
   double? userLongitude;
+
+  User? userData;
 
   bool _isCalling = false;
 
   bool get isCalling => _isCalling;
 
-  HomePageProvider() {
+  HomePageProvider(this.authStore) {
     init();
   }
 
-  init() {
-    getLocationPermission();
+  init() async {
+    await getLocationPermission();
+    await getUserData();
   }
 
   Future<void> getLocationPermission() async {
@@ -48,19 +56,20 @@ class HomePageProvider extends ChangeNotifier {
       _isCalling = true;
       notifyListeners();
       Emergency nearestEmergency = await findNearest(type);
-    String url = 'tel:${nearestEmergency.phone}';
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-    } else {
-      throw 'Could not launch $url';
-    }
-    }catch (e) {
+      String url = 'tel:${nearestEmergency.phone}';
+      // if (await canLaunchUrl(Uri.parse(url))) {
+      //   await launchUrl(Uri.parse(url));
+      // } else {
+      //   throw 'Could not launch $url';
+      // }
+      await updateRecentCallOnEmergency(
+          Call(type: type, user: userData!, time: DateTime.now()));
+    } catch (e) {
       print(e);
-    }finally {
+    } finally {
       _isCalling = false;
       notifyListeners();
     }
-    
   }
 
   Future<Emergency> findNearest(EmergencyType type) async {
@@ -104,5 +113,15 @@ class HomePageProvider extends ChangeNotifier {
 
   double _degreesToRadians(double degrees) {
     return degrees * pi / 180;
+  }
+
+  updateRecentCallOnEmergency(Call call) async {
+    CollectionReference recentCalls =
+        FirebaseFirestore.instance.collection('recent_calls');
+    await recentCalls.add(call.toJson());
+  }
+
+  getUserData() async {
+    userData = await authStore.getUser();
   }
 }

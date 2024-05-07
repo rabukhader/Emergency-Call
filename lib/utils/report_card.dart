@@ -22,9 +22,13 @@ class ReportCard extends StatelessWidget {
             children: [
               Text(
                 report.title,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 5),
               Text(Formatter.formatDateTimeToString(report.date)),
+              Text("Description : ${report.description}"),
+              Text("Phone Number : 0${report.userNumber}"),
             ],
           ),
         ),
