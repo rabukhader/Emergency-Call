@@ -15,7 +15,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  final String type;
+  const ProfilePage({super.key, required this.type});
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +92,7 @@ class ProfilePage extends StatelessWidget {
                         const Divider(),
                         const SizedBox(height: 10),
 
-                        ProfileMenuWidget(
+                        if(type == "default") ProfileMenuWidget(
                             title: "Car Information",
                             icon: LineAwesomeIcons.car,
                             onPress: () async {

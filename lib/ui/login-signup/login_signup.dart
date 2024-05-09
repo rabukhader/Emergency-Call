@@ -381,6 +381,15 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                   _validateInput();
                 });
               },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return null;
+                }
+                if (!Validator.validatePassword(value)) {
+                  return "Please enter a valid Password";
+                }
+                return null;
+              },
               controller: _password,
               obscureText: true,
               decoration: const InputDecoration(

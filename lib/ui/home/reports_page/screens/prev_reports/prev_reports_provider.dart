@@ -1,4 +1,5 @@
 import 'package:emergancy_call/model/emergency.dart';
+import 'package:emergancy_call/model/location.dart';
 import 'package:emergancy_call/model/report.dart';
 import 'package:emergancy_call/model/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 
 class PreviousReportsProvider extends ChangeNotifier {
   final AuthStore authStore;
+  Location? userLocation;
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -39,10 +41,19 @@ class PreviousReportsProvider extends ChangeNotifier {
         String title = doc['title'];
         String description = doc['description'];
         Timestamp dateTime = doc['date'];
+        List<String> images = [];
+        if (doc['images'] != null && doc['images'] is List) {
+          (doc['images']).forEach(( value) {
+            images.add(value);
+          });
+        }
+        print(images);
+        Location userLocation = Location.fromJson(doc['location']);
         EmergencyType type = Formatter.stringToEmergencyType(doc['type']);
         Report report = Report(
-          //ok
-          type: type,
+            imagesUrl: images,
+            location: userLocation,
+            type: type,
             title: title,
             description: description,
             date: Formatter.convertTimestampToDateTime(dateTime));

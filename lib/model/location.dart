@@ -1,6 +1,14 @@
 class Location {
-  final double latitude;
-  final double longitude;
+  double latitude;
+  double longitude;
 
-  Location(this.latitude, this.longitude);
+  Location({required this.longitude, required this.latitude});
+
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(latitude: (json['latitude']).toDouble(), longitude: (json['longitude']).toDouble());
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'latitude': latitude, 'longitude': longitude};
+  }
 }

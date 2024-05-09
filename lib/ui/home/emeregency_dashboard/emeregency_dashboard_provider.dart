@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emergancy_call/model/call.dart';
 import 'package:emergancy_call/model/car.dart';
+import 'package:emergancy_call/model/location.dart';
 import 'package:emergancy_call/model/report.dart';
 import 'package:emergancy_call/utils/formatter.dart';
 import 'package:flutter/material.dart';
@@ -43,13 +44,14 @@ class EmergencyDashboardProvider extends ChangeNotifier {
       String title = doc['title'];
       String description = doc['description'];
       Timestamp dateTime = doc['date'];
-      int userNumber = doc['userNumber'];
+      int userNumber = doc['number'];
+      List<String> images = [];
+      doc['images'].forEach((e) => images.add(e));
+      Location userLocation = Location.fromJson(doc['location']);
       Report report = Report(
-          userCar: Car(
-              carName: doc['carName'],
-              carNumber: doc['carNumber'],
-              carYearModel: doc['carYearModel'],
-              isGuranteed: doc['isGuranteed']),
+      imagesUrl: images,
+        location: userLocation,
+          userCar: Car.fromJson(doc['userCar']),
           type: Formatter.stringToEmergencyType(type),
           title: title,
           userNumber: userNumber,

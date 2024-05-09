@@ -25,7 +25,11 @@ class Validator {
   }
 
   static bool isFullNameValid(String fullName) {
-  RegExp regex = RegExp(r'^[a-zA-Z]+( [a-zA-Z]+)+$');
-  return regex.hasMatch(fullName);
-}
+    RegExp regex = RegExp(r'^[a-zA-Z]+( [a-zA-Z]+)+$');
+    return regex.hasMatch(fullName);
+  }
+
+  static bool validatePassword(String input){
+    return RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(input);
+  }
 }

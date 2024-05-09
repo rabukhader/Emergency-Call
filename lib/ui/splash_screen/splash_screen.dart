@@ -8,7 +8,6 @@ import 'package:emergancy_call/utils/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -68,6 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _onSplashCompleted() async {
     User? user = await GetIt.I<AuthStore>().getUser();
+    print(user);
     if (user != null) {
           manageNavigation(user.email);
     } else {
@@ -83,7 +83,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => const HomePage(type: "police")),
+              builder: (context) => const HomePage(type: "POLICE")),
           (route) => false);
     } else if (email.contains("ambulance")) {
       Navigator.pushAndRemoveUntil(

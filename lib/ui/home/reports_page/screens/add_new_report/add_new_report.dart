@@ -7,6 +7,7 @@ import 'package:emergancy_call/utils/colors.dart';
 import 'package:emergancy_call/utils/date_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class AddNewReport extends StatefulWidget {
@@ -23,6 +24,7 @@ class _AddNewReportState extends State<AddNewReport> {
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
   DateTime? selectedDate = DateTime.now();
   EmergencyType? _selectedType;
+  List<String> images = [];
 
   @override
   Widget build(BuildContext context) {
@@ -114,8 +116,61 @@ class _AddNewReportState extends State<AddNewReport> {
                           ),
                         ),
                       ),
+                      Center(
+                          child: QPrimaryButton(
+                        label: "Add Photos",
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Choose an image source"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pop(context);
+                                    String link = await model
+                                        .pickImage(ImageSource.camera);
+                                    if (link != "false") {
+                                      images.add(link);
+                                    }
+                                    setState(() {});
+                                  },
+                                  child: const Text("Camera"),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pop(context);
+                                    String link = await model
+                                        .pickImage(ImageSource.gallery);
+                                    if (link != "false") {
+                                      images.add(link);
+                                    }
+                                    setState(() {});
+                                  },
+                                  child: const Text("Gallery"),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      )),
+                      Column(
+                        children: images
+                            .map((e) => Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.network(
+                                    e,
+                                    width: 150,
+                                    height: 150,
+                                  ),
+                                ))
+                            .toList(),
+                      )
                     ],
                   ),
+                ),
+                const SizedBox(
+                  height: 25,
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -127,7 +182,9 @@ class _AddNewReportState extends State<AddNewReport> {
                           enabled: _validateInput(),
                           onPressed: () {
                             model.addNewReport(Report(
-                              userCar: model.userCar, 
+                                imagesUrl: images,
+                                location: model.userLocation,
+                                userCar: model.userCar,
                                 type: _selectedType ?? EmergencyType.ambulance,
                                 title: _title.text,
                                 description: _description.text,
@@ -140,7 +197,7 @@ class _AddNewReportState extends State<AddNewReport> {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           );
@@ -158,5 +215,6 @@ class _AddNewReportState extends State<AddNewReport> {
     _description.text = "";
     _policeName.text = "";
     selectedDate = DateTime.now();
+    images = [];
   }
 }

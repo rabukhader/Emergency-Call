@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
       case 1:
         return getSecondPage();
       case 2:
-        return const ProfilePage();
+        return ProfilePage(type: widget.type,);
     }
   }
 
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
     if (widget.type == "default") {
       return const ReportsPage();
     } else {
-      return const ProfilePage();
+      return ProfilePage(type: widget.type,);
     }
   }
 }
