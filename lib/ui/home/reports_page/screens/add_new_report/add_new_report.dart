@@ -127,6 +127,7 @@ class _AddNewReportState extends State<AddNewReport> {
                           enabled: _validateInput(),
                           onPressed: () {
                             model.addNewReport(Report(
+                              userCar: model.userCar, 
                                 type: _selectedType ?? EmergencyType.ambulance,
                                 title: _title.text,
                                 description: _description.text,

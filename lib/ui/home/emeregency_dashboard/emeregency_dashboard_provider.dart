@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emergancy_call/model/call.dart';
+import 'package:emergancy_call/model/car.dart';
 import 'package:emergancy_call/model/report.dart';
 import 'package:emergancy_call/utils/formatter.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class EmergencyDashboardProvider extends ChangeNotifier {
   }
 
   _fetchPoliceReports() async {
-    CollectionReference emergencyTypeRef = _firestore.collection(type);
+    CollectionReference emergencyTypeRef = _firestore.collection("POLICE");
 
     QuerySnapshot reportsSnapshot = await emergencyTypeRef.get();
     List<Report> previousReport = [];
@@ -44,6 +45,11 @@ class EmergencyDashboardProvider extends ChangeNotifier {
       Timestamp dateTime = doc['date'];
       int userNumber = doc['userNumber'];
       Report report = Report(
+          userCar: Car(
+              carName: doc['carName'],
+              carNumber: doc['carNumber'],
+              carYearModel: doc['carYearModel'],
+              isGuranteed: doc['isGuranteed']),
           type: Formatter.stringToEmergencyType(type),
           title: title,
           userNumber: userNumber,

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emergancy_call/model/car.dart';
 import 'package:emergancy_call/model/user.dart';
 import 'package:emergancy_call/services/auth_store.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ class ProfileProvider extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
   User? userData;
+  Car? userCar;
 
   ProfileProvider({required this.authStore}) {
     init();
@@ -18,6 +21,7 @@ class ProfileProvider extends ChangeNotifier {
       _isLoading = true;
       notifyListeners();
       userData = await authStore.getUser();
+      await fetchUserCar();
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -32,5 +36,17 @@ class ProfileProvider extends ChangeNotifier {
 
   Future<void> refreshData() async {
     await init();
+  }
+
+  fetchUserCar() async {
+    CollectionReference users = FirebaseFirestore.instance.collection('user');
+    DocumentSnapshot user = await users.doc(userData!.id).get();
+    Map userMap = user.data() as Map<String, dynamic>;
+    userCar = Car.fromJson({
+      "isGuranteed": userMap['isGuranteed'],
+      "carName": userMap['carName'],
+      "carYearModel": userMap['carYearModel'],
+      "carNumber": userMap['carNumber'],
+    });
   }
 }
