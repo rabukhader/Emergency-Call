@@ -1,5 +1,5 @@
 import 'package:emergancy_call/services/auth_store.dart';
-import 'package:emergancy_call/ui/home/profile_page/edit_profile.dart';
+import 'package:emergancy_call/ui/home/profile_page/car_info/car_info.dart';
 import 'package:emergancy_call/ui/home/profile_page/profile_provider.dart';
 import 'package:emergancy_call/ui/home/profile_page/user_info/user_info_page.dart';
 import 'package:emergancy_call/ui/on_boarding_page/onboarding_page.dart';
@@ -37,7 +37,10 @@ class ProfilePage extends StatelessWidget {
                               height: 120,
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(100),
-                                  child: SvgPicture.asset(provider.getGender == 'female' ?  kProfileFemale : kProfileMale)),
+                                  child: SvgPicture.asset(
+                                      provider.getGender == 'female'
+                                          ? kProfileFemale
+                                          : kProfileMale)),
                             ),
                             Positioned(
                               bottom: 0,
@@ -68,12 +71,13 @@ class ProfilePage extends StatelessWidget {
                         SizedBox(
                           width: 200,
                           child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
+                            onPressed: () async {
+                              await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const EditProfileScreen()));
+                                      builder: (context) => UserInfoPage(
+                                          user: provider.userData)));
+                              await provider.refreshData();
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: kPrimaryColor,
@@ -87,18 +91,15 @@ class ProfilePage extends StatelessWidget {
                         const Divider(),
                         const SizedBox(height: 10),
 
-                        /// -- MENU
                         ProfileMenuWidget(
-                            title: "Settings",
-                            icon: LineAwesomeIcons.cog,
-                            onPress: () {}),
-                        const Divider(),
-                        const SizedBox(height: 10),
-                        ProfileMenuWidget(
-                            title: "Information",
-                            icon: LineAwesomeIcons.info,
+                            title: "Car Information",
+                            icon: LineAwesomeIcons.car,
                             onPress: () async {
-                              await Navigator.push(context, MaterialPageRoute(builder: (context) => UserInfoPage(user : provider.userData)));
+                              await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CarInfoPage(
+                                          userCar: provider.userCar)));
                               await provider.refreshData();
                             }),
                         const SizedBox(height: 10),

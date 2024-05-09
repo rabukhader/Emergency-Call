@@ -41,6 +41,7 @@ class PreviousReportsProvider extends ChangeNotifier {
         Timestamp dateTime = doc['date'];
         EmergencyType type = Formatter.stringToEmergencyType(doc['type']);
         Report report = Report(
+          //ok
           type: type,
             title: title,
             description: description,
