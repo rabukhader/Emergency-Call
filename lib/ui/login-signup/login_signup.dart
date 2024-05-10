@@ -284,7 +284,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                   return null;
                 }
                 if (!Validator.isFullNameValid(value)) {
-                  return "Please enter a valid full name";
+                  return "Valid password must contains at least one uppercase letter, one smallcase letter, one number & one special character";
                 }
                 return null;
               },
