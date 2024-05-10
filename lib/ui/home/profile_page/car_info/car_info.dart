@@ -73,77 +73,100 @@ class _ContainernfoPageState extends State<CarInfoPage> {
                       Column(children: [
                         Container(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              setState(() {
-                                _formState.currentState!.validate();
-                                _validateInput();
-                              });
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return null;
-                              }
-                              return null;
-                            },
-                            controller: _carName,
-                            decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Car Type Name",
-                                hintStyle:
-                                    TextStyle(color: kPrimaryDarkerColor)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              const Text("Car Name"),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                child: TextFormField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _formState.currentState!.validate();
+                                      _validateInput();
+                                    });
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return null;
+                                    }
+                                    return null;
+                                  },
+                                  controller: _carName,
+                                  decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "Car Type Name",
+                                      hintStyle: TextStyle(
+                                          color: kPrimaryDarkerColor)),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              setState(() {
-                                _formState.currentState!.validate();
-                                _validateInput();
-                              });
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return null;
-                              }
-                              return null;
-                            },
-                            keyboardType: TextInputType.number,
-                            controller: _carNumber,
-                            decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Car Type Name",
-                                hintStyle:
-                                    TextStyle(color: kPrimaryDarkerColor)),
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            const Text("Car License Number"),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                onChanged: (value) {
+                                  setState(() {
+                                    _formState.currentState!.validate();
+                                    _validateInput();
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return null;
+                                  }
+                                  return null;
+                                },
+                                keyboardType: TextInputType.number,
+                                controller: _carNumber,
+                                decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: "Car Type Name",
+                                    hintStyle:
+                                        TextStyle(color: kPrimaryDarkerColor)),
+                              ),
+                            ),
+                          ],
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              setState(() {
-                                _formState.currentState!.validate();
-                                _validateInput();
-                              });
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return null;
-                              }
-                              if (Validator.isNumericWithLength(value, 4)) {
-                                return null;
-                              }
-                              return null;
-                            },
-                            keyboardType: TextInputType.number,
-                            controller: _carYearModel,
-                            decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Car Year Model",
-                                hintStyle:
-                                    TextStyle(color: kPrimaryDarkerColor)),
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            const Text("Car Model Year"),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                onChanged: (value) {
+                                  setState(() {
+                                    _formState.currentState!.validate();
+                                    _validateInput();
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return null;
+                                  }
+                                  if (Validator.isNumericWithLength(value, 4)) {
+                                    return null;
+                                  }
+                                  return null;
+                                },
+                                keyboardType: TextInputType.number,
+                                controller: _carYearModel,
+                                decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: "Car Year Model",
+                                    hintStyle:
+                                        TextStyle(color: kPrimaryDarkerColor)),
+                              ),
+                            ),
+                          ],
                         ),
                         Container(
                           padding: const EdgeInsets.all(8.0),
