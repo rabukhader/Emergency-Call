@@ -31,10 +31,11 @@ class AuthStore {
       user.fullname = data['fullname'] ?? user.fullname;
       user.bloodType = data['bloodType'] ?? user.bloodType;
       user.nationalId = data['nationalId'] ?? user.nationalId;
+      print(data['height']!= null);
       user.height =
-          data['height'] != null ? int.parse(data['height']) : user.height;
+          (data['height'] != null && data['height'].toString().trim() != '') ? int.parse(data['height']) : user.height;
       user.weight =
-          data['weight'] != null ? int.parse(data['weight']) : user.weight;
+          data['weight'] != null  && data['weight'].toString().trim() != '' ? int.parse(data['weight']) : user.weight;
       user.medicalHistory = data['medicalHistory'] ?? user.medicalHistory;
       if (data['dateOfBirth'] != null ||
           data['dateOfBirth'] == DateTime.now().toString()) {

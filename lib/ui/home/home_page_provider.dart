@@ -57,11 +57,11 @@ class HomePageProvider extends ChangeNotifier {
       notifyListeners();
       Emergency nearestEmergency = await findNearest(type);
       String url = 'tel:${nearestEmergency.phone}';
-      // if (await canLaunchUrl(Uri.parse(url))) {
-      //   await launchUrl(Uri.parse(url));
-      // } else {
-      //   throw 'Could not launch $url';
-      // }
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url));
+      } else {
+        throw 'Could not launch $url';
+      }
       await updateRecentCallOnEmergency(
           Call(type: type, user: userData!, time: DateTime.now()));
     } catch (e) {

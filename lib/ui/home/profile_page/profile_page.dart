@@ -1,7 +1,8 @@
 import 'package:emergancy_call/services/auth_store.dart';
 import 'package:emergancy_call/ui/home/profile_page/car_info/car_info.dart';
 import 'package:emergancy_call/ui/home/profile_page/profile_provider.dart';
-import 'package:emergancy_call/ui/home/profile_page/user_info/user_info_page.dart';
+import 'package:emergancy_call/ui/home/profile_page/user_info/edit_user_info_page.dart';
+import 'package:emergancy_call/ui/home/profile_page/user_info/user_information_page.dart';
 import 'package:emergancy_call/ui/on_boarding_page/onboarding_page.dart';
 import 'package:emergancy_call/utils/colors.dart';
 import 'package:emergancy_call/utils/icons.dart';
@@ -101,6 +102,17 @@ class ProfilePage extends StatelessWidget {
                                   MaterialPageRoute(
                                       builder: (context) => CarInfoPage(
                                           userCar: provider.userCar)));
+                              await provider.refreshData();
+                            }),
+                            if(type == "default") ProfileMenuWidget(
+                            title: "User Information",
+                            icon: LineAwesomeIcons.user,
+                            onPress: () async {
+                              await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UserInformationPage(
+                                          user: provider.userData)));
                               await provider.refreshData();
                             }),
                         const SizedBox(height: 10),

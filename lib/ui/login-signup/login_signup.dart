@@ -284,7 +284,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                   return null;
                 }
                 if (!Validator.isFullNameValid(value)) {
-                  return "Valid password must contains at least one uppercase letter, one smallcase letter, one number & one special character";
+                  return "Please Enter a Valid Full Name";
                 }
                 return null;
               },
@@ -309,7 +309,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                   return null;
                 }
                 if (!Validator.emailFieldValidation(value)) {
-                  return "Please enter a valid email";
+                  return "Please Enter a Valid Email";
                 }
                 return null;
               },
@@ -386,7 +386,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                   return null;
                 }
                 if (!Validator.validatePassword(value)) {
-                  return "Please enter a valid Password";
+                  return "Valid password must contains at least one uppercase letter, one smallcase letter, one number & one special character";
                 }
                 return null;
               },
