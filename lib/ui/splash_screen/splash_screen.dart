@@ -49,10 +49,10 @@ class _SplashScreenState extends State<SplashScreen> {
               SvgPicture.asset(
                 kAmankLogoIcons,
                 color: kWhiteColor,
-                height: 350,
+                height: 200,
               ),
               const Text(
-                "Amank",
+                "أمانك",
                 style: TextStyle(
                     color: kWhiteColor,
                     fontSize: 44,
@@ -67,7 +67,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _onSplashCompleted() async {
     User? user = await GetIt.I<AuthStore>().getUser();
-    print(user);
     if (user != null) {
           manageNavigation(user.email);
     } else {

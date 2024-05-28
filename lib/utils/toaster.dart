@@ -1,5 +1,4 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:emergancy_call/utils/exception.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +10,7 @@ class ErrorUtils {
       {Duration? duration}) async {
     String message = "Something Went Wrong Please Try Again";
 
-    if (exception is NoInternetConnectionException) {
-      message = "No Internet";
-    } else if (exception is ApiException) {
-      if (exception.message != null && exception.message!.isNotEmpty) {
-        message = exception.message!;
-      }
-    } else if (exception is String) {
+    if (exception is String) {
       message = exception;
     } else if (kDebugMode) {
       message = exception.toString();

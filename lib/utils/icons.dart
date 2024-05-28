@@ -1,4 +1,4 @@
-const kAmankLogoIcons = "assets/icons/emergency.svg";
+const kAmankLogoIcons = "assets/icons/logo_amank.svg";
 const kOnBoardingIcon1 = "assets/icons/bb1.svg";
 const kOnBoardingIcon2 = "assets/icons/bb2.svg";
 const kOnBoardingIcon3 = "assets/icons/bb3.svg";
