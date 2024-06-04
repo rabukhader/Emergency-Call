@@ -1,7 +1,9 @@
 import 'package:emergancy_call/model/report.dart';
 import 'package:emergancy_call/ui/home/report_details_page/report_details_page.dart';
+import 'package:emergancy_call/utils/buttons.dart';
 import 'package:emergancy_call/utils/formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReportCard extends StatelessWidget {
   final Report report;
@@ -50,35 +52,55 @@ class ReportCard extends StatelessWidget {
                       )
                     ],
                   ),
-                if (report.location != null)
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("User Latitude : ${report.location!.latitude}"),
-                      Text("User Longitude : ${report.location!.longitude}"),
-                      const SizedBox(
-                        height: 14,
-                      )
-                    ],
-                  ),
                 if (report.imagesUrl != null && report.imagesUrl!.isNotEmpty)
-                  Row(
-                    children: report.imagesUrl!
-                        .map((e) => Expanded(
-                              child: Image.network(
-                                e,
-                                width: 160,
-                                height: 160,
-                              ),
-                            ))
-                        .toList(),
-                  )
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: report.imagesUrl!
+                          .map((e) => Expanded(
+                                child: Image.network(
+                                  e,
+                                  width: 160,
+                                  height: 160,
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                if (report.location != null)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: QPrimaryButton(
+                            label: "Open Location",
+                            onPressed: () {
+                              _launchMaps(report.location?.longitude,
+                                  report.location?.latitude);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  void _launchMaps(longitude, latitude) async {
+    final url =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emergancy_call/model/call.dart';
 import 'package:emergancy_call/model/emergency.dart';
+import 'package:emergancy_call/model/location.dart';
 import 'package:emergancy_call/model/user.dart';
 import 'package:emergancy_call/services/auth_store.dart';
 import 'package:emergancy_call/utils/emergency_list.dart';
@@ -62,8 +63,12 @@ class HomePageProvider extends ChangeNotifier {
       } else {
         throw 'Could not launch $url';
       }
-      await updateRecentCallOnEmergency(
-          Call(type: type, user: userData!, time: DateTime.now()));
+      await updateRecentCallOnEmergency(Call(
+          type: type,
+          user: userData!,
+          time: DateTime.now(),
+          location: Location(
+              latitude: userLatitude ?? 0, longitude: userLongitude ?? 0)));
     } catch (e) {
       print(e);
     } finally {

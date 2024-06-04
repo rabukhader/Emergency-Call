@@ -32,6 +32,18 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
   Gender _selectedGender = Gender.male;
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
 
+  _toggle() {
+    setState(() {
+      _email.clear();
+      _password.clear();
+      _confirmPassword.clear();
+      _phone.clear();
+      _nationalId.clear();
+      _fullName.clear();
+      isLogIn = !isLogIn;
+    });
+  }
+
   @override
   void initState() {
     isLogIn = widget.isLogIn;
@@ -185,9 +197,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                               duration: const Duration(milliseconds: 2000),
                               child: TextButton(
                                 onPressed: () {
-                                  setState(() {
-                                    isLogIn = !isLogIn;
-                                  });
+                                 _toggle();
                                 },
                                 child: Text(
                                   isLogIn
@@ -335,7 +345,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                 if (value == null || value.isEmpty) {
                   return null;
                 }
-                if (!Validator.isNumericWithLength(value, 8)) {
+                if (!Validator.nationalIdValidation(value)) {
                   return "Please enter a valid National ID";
                 }
                 return null;

@@ -9,6 +9,7 @@ import 'package:emergancy_call/utils/report_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DashboardPage extends StatelessWidget {
   final String type;
@@ -144,12 +145,15 @@ class RecentCallCard extends StatelessWidget {
             Text('Email: ${call.user.email}'),
             Text('Time: ${call.time}'),
             Text('Gender: ${call.user.gender}'),
-            const Padding(
-              padding: EdgeInsets.only(top: 12.0),
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0),
               child: Center(
                 child: QPrimaryButton(
                   minSize: 42,
                   label: "Open Location",
+                  onPressed: () {
+                    _launchMaps(call.location.longitude, call.location.latitude);
+                  },
                 ),
               ),
             )
@@ -157,5 +161,15 @@ class RecentCallCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+    void _launchMaps(longitude, latitude) async {
+    final url =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
