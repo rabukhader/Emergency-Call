@@ -8,3 +8,7 @@ const kClock = "assets/images/light-1.png";
 const kClock2 = 'assets/images/light-2.png';
 const kDashboard = 'assets/icons/dashboard.svg';
 const kThanks = 'assets/icons/thanks.svg';
+const kSnowy = 'assets/images/snowy.webp';
+const kCloudy = 'assets/images/cloudy.webp';
+const kSunny = 'assets/images/sunny.webp';
+const kRainy = 'assets/images/rainy.webp';

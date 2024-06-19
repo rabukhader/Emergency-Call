@@ -31,7 +31,6 @@ class AuthStore {
       user.fullname = data['fullname'] ?? user.fullname;
       user.bloodType = data['bloodType'] ?? user.bloodType;
       user.nationalId = data['nationalId'] ?? user.nationalId;
-      print(data['height']!= null);
       user.height =
           (data['height'] != null && data['height'].toString().trim() != '') ? int.parse(data['height']) : user.height;
       user.weight =

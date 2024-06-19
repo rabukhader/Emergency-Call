@@ -46,11 +46,6 @@ class EmergencyPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             QPrimaryButton.icon(
-              label: "Call More",
-              icon: const Icon(Icons.phone),
-              onPressed: () {},
-            ),
-            QPrimaryButton.icon(
               label: "Call Civil Defense",
               icon: const Icon(Icons.phone),
               onPressed: () async {

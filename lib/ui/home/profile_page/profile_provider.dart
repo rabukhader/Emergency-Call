@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 
 class ProfileProvider extends ChangeNotifier {
   final AuthStore authStore;
+  final String userType;
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
   User? userData;
   Car? userCar;
 
-  ProfileProvider({required this.authStore}) {
+  ProfileProvider({required this.authStore, required this.userType}) {
     init();
   }
 
@@ -21,7 +22,9 @@ class ProfileProvider extends ChangeNotifier {
       _isLoading = true;
       notifyListeners();
       userData = await authStore.getUser();
-      await fetchUserCar();
+      if (userType == "default") {
+        await fetchUserCar();
+      }
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -47,6 +50,7 @@ class ProfileProvider extends ChangeNotifier {
       "carName": userMap['carName'],
       "carYearModel": userMap['carYearModel'],
       "carNumber": userMap['carNumber'],
+      "insuranceCompany": userMap['insuranceCompany']
     });
   }
 }

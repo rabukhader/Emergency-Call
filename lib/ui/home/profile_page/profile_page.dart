@@ -22,7 +22,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (_) => ProfileProvider(authStore: GetIt.I<AuthStore>()),
+        create: (_) => ProfileProvider(authStore: GetIt.I<AuthStore>(), userType: type),
         builder: (context, snapshot) {
           ProfileProvider provider = context.watch();
           return provider.isLoading

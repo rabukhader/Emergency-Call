@@ -43,14 +43,15 @@ class PreviousReportsProvider extends ChangeNotifier {
         Timestamp dateTime = doc['date'];
         List<String> images = [];
         if (doc['images'] != null && doc['images'] is List) {
-          (doc['images']).forEach(( value) {
+          (doc['images']).forEach((value) {
             images.add(value);
           });
         }
-        print(images);
         Location userLocation = Location.fromJson(doc['location']);
         EmergencyType type = Formatter.stringToEmergencyType(doc['type']);
         Report report = Report(
+            policeOfficer: doc['policeOfficer'],
+            weather: doc['weather'] ?? "Cloudy",
             imagesUrl: images,
             location: userLocation,
             type: type,

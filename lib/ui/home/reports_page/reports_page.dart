@@ -4,7 +4,8 @@ import 'package:emergancy_call/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ReportsPage extends StatefulWidget {
-  const ReportsPage({super.key});
+  final String type;
+  const ReportsPage({super.key, required this.type});
 
   @override
   State<ReportsPage> createState() => _ReportsPageState();
@@ -17,22 +18,22 @@ class _ReportsPageState extends State<ReportsPage> {
       children: [
         Expanded(
           child: DefaultTabController(
-            length: 2,
+            length: 1,
             child: Column(
               children: [
                 TabBar(
                   indicatorColor: kPrimaryColor,
-                  tabs: const [
-                    Tab(child: Text("My Reports", style: TextStyle(color: kPrimaryColor),)),
-                    Tab(child: Text("Add new report", style: TextStyle(color: kPrimaryColor),)),
+                  tabs: [
+                    if(widget.type != "POLICE")const Tab(child: Text("My Reports", style: TextStyle(color: kPrimaryColor),)),
+                    if(widget.type == "POLICE")const Tab(child: Text("Add new report", style: TextStyle(color: kPrimaryColor),)),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Expanded(
+                Expanded(
                   child: TabBarView(
                     children: [
-                      PreviousReports(),
-                      AddNewReport(),
+                      if(widget.type != "POLICE")const PreviousReports(),
+                      if(widget.type == "POLICE")const AddNewReport(),
                     ],
                   ),
                 )

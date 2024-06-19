@@ -25,8 +25,10 @@ class EmergencyDashboardProvider extends ChangeNotifier {
       notifyListeners();
       if (type == "POLICE") {
         await _fetchPoliceReports();
+        (reports ?? []).sort((a, b) => b.date.compareTo(a.date));
       }
       recentCalls = await getRecentCalls(type);
+      (recentCalls ?? []).sort((a, b) => b.time.compareTo(a.time));
     } catch (e) {
       print(e);
     } finally {
@@ -44,18 +46,27 @@ class EmergencyDashboardProvider extends ChangeNotifier {
       String title = doc['title'];
       String description = doc['description'];
       Timestamp dateTime = doc['date'];
-      int userNumber = doc['number'];
       List<String> images = [];
       doc['images'].forEach((e) => images.add(e));
+      List<String> injuries = [];
+      doc['injuries'].forEach((e) => injuries.add(e));
       Location userLocation = Location.fromJson(doc['location']);
+      List<Car> cars = [];
+      if (doc['cars'] != null) {
+        cars = (doc['cars'] as List<dynamic>)
+            .map((e) => Car.fromJson(e as Map<String, dynamic>))
+            .toList();
+      }
       Report report = Report(
-      imagesUrl: images,
-        location: userLocation,
-          userCar: Car.fromJson(doc['userCar']),
+          weather: doc['weather'] ?? "Cloudy",
+          policeOfficer: doc['policeOfficer'],
+          imagesUrl: images,
+          location: userLocation,
+          cars: cars,
           type: Formatter.stringToEmergencyType(type),
           title: title,
-          userNumber: userNumber,
           description: description,
+          injuries: injuries,
           date: Formatter.convertTimestampToDateTime(dateTime));
       previousReport.add(report);
     }

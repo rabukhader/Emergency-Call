@@ -2,6 +2,7 @@ import 'package:emergancy_call/model/report.dart';
 import 'package:emergancy_call/ui/home/report_details_page/report_details_page.dart';
 import 'package:emergancy_call/utils/buttons.dart';
 import 'package:emergancy_call/utils/formatter.dart';
+import 'package:emergancy_call/utils/weather_status.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -32,48 +33,46 @@ class ReportCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Title : ${report.title}",
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.w600),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Title : ${report.title}",
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                        width: 75,
+                        height: 75,
+                        child: WeatherStatus(
+                            weatherStatus: report.weather ?? "Cloudy"))
+                  ],
                 ),
                 const SizedBox(height: 5),
                 Text("Date : ${Formatter.formatDateTimeToString(report.date)}"),
                 Text("Description : ${report.description}"),
-                if (report.userCar != null)
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                Text("Police Officer : ${report.policeOfficer}"),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0, vertical: 12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text("Car Number : ${report.userCar!.carNumber}"),
-                      Text("Car Name : ${report.userCar!.carName}"),
-                      const SizedBox(
-                        height: 14,
-                      )
-                    ],
-                  ),
-                if (report.imagesUrl != null && report.imagesUrl!.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: report.imagesUrl!
-                          .map((e) => Expanded(
-                                child: Image.network(
-                                  e,
-                                  width: 160,
-                                  height: 160,
-                                ),
-                              ))
-                          .toList(),
-                    ),
-                  ),
-                if (report.location != null)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
+                      Expanded(
+                        child: QPrimaryButton(
+                          label: "More Details",
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ReportDetailsPage(
+                                          report: report,
+                                        )));
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 16.0,),
+                      if (report.location != null)
                         Expanded(
                           child: QPrimaryButton(
                             label: "Open Location",
@@ -83,9 +82,9 @@ class ReportCard extends StatelessWidget {
                             },
                           ),
                         ),
-                      ],
-                    ),
+                    ],
                   ),
+                ),
               ],
             ),
           ),

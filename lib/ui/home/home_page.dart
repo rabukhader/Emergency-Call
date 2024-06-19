@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                 items: [
                   const BottomNavigationBarItem(
                       label: "Home", icon: Icon(Icons.home)),
-                  if (widget.type == "default")
+                  if (widget.type == "POLICE")
                     const BottomNavigationBarItem(
                         label: "Reports", icon: Icon(Icons.present_to_all)),
                   const BottomNavigationBarItem(
@@ -78,8 +78,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   getSecondPage() {
-    if (widget.type == "default") {
-      return const ReportsPage();
+    if (widget.type == "POLICE") {
+      return ReportsPage(type: widget.type,);
     } else {
       return ProfilePage(type: widget.type,);
     }
