@@ -19,10 +19,10 @@ List<Emergency> emergencyList = [
   
   /* ******************************************************** - Civil - ****************************************************************************** */
   Emergency(Location(longitude: 35.21380, latitude: 31.90479), "+97022955880",EmergencyType.civil), //مركز دفاع المدني /البيرة
-  Emergency(Location(longitude: 35.23133, latitude: 31.85231), " ------ ",EmergencyType.civil), //مركز اسناد الوسط (الدفاع المدني )
+  Emergency(Location(longitude: 35.23133, latitude: 31.85231), "+972592844742 ",EmergencyType.civil), //مركز اسناد الوسط (الدفاع المدني )
   Emergency(Location(longitude: 35.23646, latitude: 31.84738), "+972 562 505 677",EmergencyType.civil), //مديرية الدفاع المدني / محافظة القدس
-  Emergency(Location(longitude: 35.29719, latitude: 31.95936), "--------",EmergencyType.civil), //مركز دفاع المدني دير جرير 
-  Emergency(Location(longitude: 34.97347, latitude: 32.19138), "------",EmergencyType.civil), //Fire Station قلقيلية
+  Emergency(Location(longitude: 35.29719, latitude: 31.95936), "+972592844742",EmergencyType.civil), //مركز دفاع المدني دير جرير 
+  Emergency(Location(longitude: 34.97347, latitude: 32.19138), "+972592844742",EmergencyType.civil), //Fire Station قلقيلية
 
 
   /* ******************************************************** - Police - ****************************************************************************** */
@@ -30,8 +30,8 @@ List<Emergency> emergencyList = [
     Emergency(Location(longitude: 35.46805, latitude: 31.86361), "+97092940440", EmergencyType.police), //مركز شرطة مدينه أريحا
     Emergency(Location(longitude: 35.17624, latitude: 32.08254), "+97092515101", EmergencyType.police), //مركز شرطة مدينة سلفيت
     Emergency(Location(longitude: 35.28939, latitude: 32.42274), "+97042522515", EmergencyType.police), //Qabatiya police station
-    Emergency(Location(longitude: 35.19427, latitude: 31.97259), "---------", EmergencyType.police), //مخفر شرطة بيرزيت
-    Emergency(Location(longitude: 35.26350, latitude: 32.22837), "", EmergencyType.police), //شرطة نابلس
+    Emergency(Location(longitude: 35.19427, latitude: 31.97259), "+972592844742", EmergencyType.police), //مخفر شرطة بيرزيت
+    Emergency(Location(longitude: 35.26350, latitude: 32.22837), "+972592844742", EmergencyType.police), //شرطة نابلس
 
 
 
