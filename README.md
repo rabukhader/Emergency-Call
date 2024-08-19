@@ -1,5 +1,5 @@
 
-# Amank
+# Emergency Call - Amank 
 
 Amank is a Flutter-based emergency call application that allows users to quickly contact emergency services like ambulances, civil defense, or police. The app calculates the user's location and connects them to the nearest service provider based on their selection. All emergency calls are recorded on an emergency dashboard.
 
